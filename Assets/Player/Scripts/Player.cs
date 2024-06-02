@@ -8,15 +8,16 @@ namespace PlayerSpace
     {
         
         
-        [Header("Movement")] [SerializeField] private float _speed;
+        [Header("Movement")] 
+        [SerializeField] private float _speed;
         [SerializeField] private float _jumpForce;
         internal bool _isMove;
         internal bool _isFlip = true;
+        private int _doubleJump = 2;
 
 
-        [Header("CollisionInfo")] [SerializeField]
-        private Transform _checkTransform;
-
+        [Header("CollisionInfo")] 
+        [SerializeField] private Transform _checkTransform;
         [SerializeField] private float _groundCheckdRadius;
         [SerializeField] private LayerMask _groundLayerMask;
         internal bool _isGrounded;
@@ -75,9 +76,15 @@ namespace PlayerSpace
         {
             if (_isGrounded)
             {
-                _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+                _doubleJump = 2;
             }
+            
 
+            if (_doubleJump > 0 )
+            {
+                _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+                _doubleJump--;
+            }
 
         }
 

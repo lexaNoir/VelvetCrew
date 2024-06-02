@@ -20,7 +20,7 @@ namespace PlayerSpace
         void Update()
         {
             _moveInput = Input.GetAxisRaw("Horizontal");
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 _player.Jump();
             }
