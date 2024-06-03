@@ -6,7 +6,7 @@ namespace PlayerSpace
 
     public class Player : MonoBehaviour
     {
-        
+        [SerializeField] private int _lives;
         
         [Header("Movement")] 
         [SerializeField] private float _speed;
@@ -71,7 +71,8 @@ namespace PlayerSpace
                 transform.Rotate(0, 180, 0);
             }
         }
-
+        
+        
         internal void Jump()
         {
             if (_isGrounded)
