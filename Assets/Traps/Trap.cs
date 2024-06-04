@@ -2,14 +2,23 @@ using PlayerSpace;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Trap : MonoBehaviour
+namespace Trap
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    public class Trap : MonoBehaviour
     {
-        if (collision.GetComponent<Player>() != null)
+        public delegate void Hit();
+
+        public static event Hit OnHit;
+
+        protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
-            
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            if (collision.GetComponent<Player>() != null)
+            {
+                OnHit?.Invoke();
+
+                // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
         }
     }
 }

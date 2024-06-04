@@ -1,31 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class FireTrap : Trap
+namespace Trap
 {
 
-    private Animator _animator;
-    private bool _isWorking;
-    [SerializeField] private float _cooldown;
-    private float _cooldownTimer;
-    
-    
-    // Start is called before the first frame update
-    void Start()
+    public class FireTrap : Trap
     {
-        _animator = GetComponent<Animator>();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        _cooldownTimer = Time.deltaTime;
-        if (_cooldownTimer < 0)
+        private Animator _animator;
+        private bool _isWorking;
+        [SerializeField] private float _cooldown;
+        private float _cooldownTimer;
+
+
+        // Start is called before the first frame update
+        void Start()
         {
-            _isWorking = !_isWorking;
-            _cooldownTimer = _cooldown;
+            _animator = GetComponent<Animator>();
         }
-        _animator.SetBool("isWorking", _isWorking);
+
+        // Update is called once per frame
+        void Update()
+        {
+            _cooldownTimer -= Time.deltaTime;
+
+            if (_cooldownTimer < 0)
+            {
+                _isWorking = !_isWorking;
+                _cooldownTimer = _cooldown;
+            }
+
+            _animator.SetBool("isWorking", _isWorking);
+        }
+
+        protected override void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (_isWorking)
+            {
+                base.OnTriggerEnter2D(collision);
+            }
+        }
     }
 }
